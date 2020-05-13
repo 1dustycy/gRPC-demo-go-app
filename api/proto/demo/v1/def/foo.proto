@@ -1,0 +1,37 @@
+syntax = "proto3";
+package demo.v1;               // grpc命名
+option go_package = "demo.v1"; // 生成go代码的包命名，eg. web_v1_foo
+
+import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+
+// 服务定义
+service Demo {
+  // 接口定义
+  rpc GetFoo(GetFooReq) returns (GetFooResp) {
+    // gateway选项
+    option (google.api.http) = {
+      post : "/v1/get.foo"
+      body : "*"
+    };
+  }
+
+  rpc GetBar(GetBarReq) returns (GetFooResp) {
+    option (google.api.http).get = "/v1/get.bar";
+  }
+}
+
+message GetFooReq {
+  string id = 1;
+  int64 val = 2;
+  
+}
+
+message GetFooResp {
+  int64 id = 1;
+  google.protobuf.Timestamp created_at = 2;
+  string data = 3;
+  repeated string shuzhu = 4;
+}
+
+message GetBarReq {}

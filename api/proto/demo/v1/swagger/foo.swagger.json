@@ -1,0 +1,98 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "foo.proto",
+    "version": "version not set"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/get.bar": {
+      "get": {
+        "operationId": "GetBar",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/v1GetFooResp"
+            }
+          }
+        },
+        "tags": [
+          "Demo"
+        ]
+      }
+    },
+    "/v1/get.foo": {
+      "post": {
+        "summary": "接口定义",
+        "operationId": "GetFoo",
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/v1GetFooResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1GetFooReq"
+            }
+          }
+        ],
+        "tags": [
+          "Demo"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "v1GetFooReq": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "val": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "v1GetFooResp": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "data": {
+          "type": "string"
+        },
+        "shuzhu": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

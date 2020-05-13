@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: webserver
+data:
+  ADDR_HTTP: ":8080"
+  ADDR_GRPC: ":50051"

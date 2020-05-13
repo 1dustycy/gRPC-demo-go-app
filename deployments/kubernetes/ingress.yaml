@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: demo
+  namespace: development
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+    - host: demo.com
+      http:
+        paths:
+          - path: /rest(/|$)(.*)
+            backend:
+              serviceName: http
+              servicePort: http
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+  name: grpc
+  namespace: development
+spec:
+  rules:
+  - host: demo.com
+    http:
+      paths:
+      - backend:
+          serviceName: grpc
+          servicePort: grpc
+        path: /grpc

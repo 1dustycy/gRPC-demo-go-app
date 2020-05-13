@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webserver
+  labels:
+    app: demo-go-web
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: demo-go-web
+  template:
+    metadata:
+      labels:
+        app: demo-go-web
+    spec:
+      containers:
+        - name: demo-go-web
+          image: demo-go-web:latest
+          imagePullPolicy: Never
+          # volumeMounts:
+          #   - name: config-volume
+          #     mountPath: /etc/config
+          #   - name: secret-volume
+          #     mountPath: "/etc/secret"
+          #     readOnly: true
+          ports:
+            - containerPort: 8080
+            - containerPort: 9090
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+      # volumes:
+      #   - name: config-volume
+      #     configMap:
+      #       name: webserver
+      #   - name: secret-volume
+      #     secret:
+      #       secretName: webserver
+---
+# Create http svc
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: demo-go-web
+  name: http
+spec:
+  ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: demo-go-web
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
+---
+# Create gRPC svc
+apiVersion: v1
+kind: Service
+metadata:
+  name: grpc
+spec:
+  ports:
+    - name: grpc
+      port: 50051
+      protocol: TCP
+      targetPort: 50051
+  selector:
+    app: demo-go-web
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}

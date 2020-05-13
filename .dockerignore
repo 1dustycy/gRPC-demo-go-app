@@ -1,0 +1,9 @@
+.vscode
+.git
+.gitignore
+.dockerignore
+
+bin
+
+CHANGELOG.md
+README.md
