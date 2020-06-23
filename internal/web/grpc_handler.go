@@ -10,7 +10,7 @@ import (
 )
 
 // DemoServer ...
-type DemoServer struct{
+type DemoServer struct {
 	// ORM...
 }
 

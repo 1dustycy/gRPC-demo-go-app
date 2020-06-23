@@ -12,19 +12,9 @@ for mod in api/proto/* ; do
       protoc \
       -I /usr/local/include \
       -I $DIR \
-      --go_out=plugins=gorpc:$OUT \
-        $FILE
-
-      protoc \
-        -I /usr/local/include \
-        -I $DIR \
-        --grpc-gateway_out=logtostderr=true:$OUT \
-        $FILE
-
-      protoc \
-        -I /usr/local/include \
-        -I $DIR \
-        --swagger_out=logtostderr=true:$OUT/swagger \
+      --go_out=plugins=grpc:$OUT \
+      --grpc-gateway_out=logtostderr=true:$OUT \
+      --swagger_out=logtostderr=true:$OUT/swagger \
         $FILE
 
       echo "PB generated in $OUT: $FILE"

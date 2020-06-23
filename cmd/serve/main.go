@@ -1,26 +1,27 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 	"os"
 	"os/signal"
 	"syscall"
-	"time"
 
 	"github.com/betterchen/go-project-tmpl/internal/web"
 	"github.com/betterchen/go-project-tmpl/pkg/multiservices"
 )
 
 func main() {
+	ctx, cancle := context.WithCancel(context.Background())
+	defer cancle()
+
 	multiservices.Init()
 	defer multiservices.Shutdown()
 
-	if err := web.RunServices(); err != nil {
+	if err := web.RunServices(ctx); err != nil {
 		log.Panic(err)
 	}
-
-	time.Sleep(time.Second * 5)
 
 	done := make(chan error)
 

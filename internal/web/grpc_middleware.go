@@ -15,8 +15,10 @@ func NewGRPCUnaryServerInterceptor(nextTraceID func() string) grpc.UnaryServerIn
 		req interface{},
 		info *grpc.UnaryServerInfo,
 		handler grpc.UnaryHandler,
-	) (resp interface{}, err error) {
-
+	) (
+		resp interface{},
+		err error,
+	) {
 		// 尝试获取traceID
 		md, ok := metadata.FromIncomingContext(ctx)
 		if ok {

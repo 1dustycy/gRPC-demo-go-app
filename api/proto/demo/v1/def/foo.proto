@@ -1,6 +1,6 @@
 syntax = "proto3";
 package demo.v1;               // grpc命名
-option go_package = "demo.v1"; // 生成go代码的包命名，eg. web_v1_foo
+option go_package = ".;demo_v1"; // 生成go代码的包命名，eg. web_v1_foo
 
 import "google/protobuf/timestamp.proto";
 import "google/api/annotations.proto";
@@ -24,7 +24,6 @@ service Demo {
 message GetFooReq {
   string id = 1;
   int64 val = 2;
-  
 }
 
 message GetFooResp {
